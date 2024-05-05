@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import com.axis.db.DBFunction;
 import com.axis.service.DisplayLoanDetails;
+import com.axis.service.LoginDetails;
  
 public class Login {
 	DisplayLoanDetails home = new DisplayLoanDetails();
@@ -25,10 +26,11 @@ public class Login {
 		}
 		
 		String selectQuery = "select * from account where Username=?";
- 
+		System.out.println("\n");
 		displayStyle();
-		System.out.println("\n**********************       Welcome to Insta Loan        **********************");
+		System.out.println("\n**********************       WELCOME TO INSTA LOAN       **********************");
 		displayStyle();
+		System.out.println("\n");
 		
 		PreparedStatement pstmt = conn.prepareStatement(selectQuery);
 		
@@ -38,19 +40,24 @@ public class Login {
 		
 		if (rs.next()) {
 			dbPassword = rs.getString("PasswordHash");
-			System.out.println(dbPassword);
-			System.out.println(password);
+			if ((password != null || password != " ") && password.equals(dbPassword)) {
+				System.out.println("\t\tWelcome " + username + " to the Insta Loan Application");
+				
+				int id = rs.getInt("CustomerID");
+			
+	            Main.customerId = id;
+	            LoginDetails.getUserLoginDetails(id);
+	            
+				return true;	
+			} else {
+				System.out.println("--------------------   Invalid Password!!! Please Try Again!!!!   --------------------");
+				return false;
+			}
 		} else {
-			System.out.println("Invalid username!!! Pls Try Again!!!");
-			System.exit(0);
-		}
-		if ((password != null || password != " ") && password.equals(dbPassword)) {
-			System.out.println("Welcome " + username + " to the Insta Loan Application");
-			return true;	
-		} else {
-			System.out.println("Invalid Password!!! Pls Try Again!!!!");
+			System.out.println("--------------------   Invalid Username!!! Please Try Again!!!   --------------------");
 			return false;
 		}
+		
 	}
  
 	public static void displayStyle() {

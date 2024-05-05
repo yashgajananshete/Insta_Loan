@@ -6,88 +6,98 @@ import java.util.Scanner;
 import com.axis.db.DBFunction;
 import com.axis.service.ApplyForNewLoan;
 import com.axis.service.DisplayLoanDetails;
+import com.axis.service.PayEmi;
 import com.axis.service.UpdateDetails;
 
 public class Main {
 
+	public static int customerId;
+	public static String username = "";
+	public static String email = "";
+
 	public static void main(String[] args) throws SQLException {
 
-		DBFunction dbf = new DBFunction();
+		outermostloop: while (true) {
 
-		System.out.println(
-				"\n*********************************---WELCOME TO INSTA LOAN---*********************************");
-		System.out.println("Enter 1 : Login");
-		System.out.println("Enter 2 : Register");
-		System.out.print("--->");
+			DBFunction dbf = new DBFunction();
 
-		Scanner sc = new Scanner(System.in);
-		int a = sc.nextInt();
-		outermostloop:
-		while (true) {
-			if (a == 1) {
-				System.out.print("\nEnter Username : ");
-				String username = sc.next();
-				System.out.print("Enter Password : ");
-				String password = sc.next();
+			System.out.println(
+					"\n*********************************---WELCOME TO INSTA LOAN---*********************************");
+			System.out.println("\nEnter 1 : Login");
+			System.out.println("Enter 2 : Register");
+			System.out.print("--->");
 
-				Login log = new Login();
+			Scanner sc = new Scanner(System.in);
+			int a = sc.nextInt();
+			outerloop: while (true) {
+				if (a == 1) {
+					System.out.println("\n**********************   LOGIN    **********************");
 
-				boolean check = Login.CheckLogiin(username, password);
+					System.out.print("\nEnter Username : ");
+					String username = sc.next();
+					System.out.print("Enter Password : ");
+					String password = sc.next();
 
-				
-				if (check) {
-					while(true) {
-						System.out.println("\n\n\t\t\t 1. Display Existing Loan details ");
-						System.out.println("\t\t\t 2. Apply for a new Loan ");
-						System.out.println("\t\t\t 3. Pay EMI for the Loan ");
-						System.out.println("\t\t\t 4. Update Profile details");
-						System.out.println("\t\t\t 5. Exit ");
-						
-						System.out.print("Enter Your Choice -->");
-						int choice = sc.nextInt();
-						
-						  switch (choice) {
-	                      case 1:
-	                    	  DisplayLoanDetails.Display();
-	                         break;
+					Login log = new Login();
 
-	                      case 2:
-	                          ApplyForNewLoan applyForNewLoan = new ApplyForNewLoan();
-	                          applyForNewLoan.applyNewLoan();
-	                          break;
+					boolean check = Login.CheckLogiin(username, password);
 
-	                      case 3:
-//	                          PayEmiForLoan payEmiForLoan = new PayEmiForLoan();
-//	                          payEmiForLoan.payEmiForTheLoan();
-	                          break;
+					if (check) {
 
-	                      case 4:
-	                          UpdateDetails updateDetails = new UpdateDetails();
-	                          updateDetails.userUpdate();
-	                          break;
+						while (true) {
+							System.out.println("\n\n\t\t 1. Display Existing Loan details ");
+							System.out.println("\t\t 2. Apply for a new Loan ");
+							System.out.println("\t\t 3. Pay EMI for the Loan ");
+							System.out.println("\t\t 4. Update Profile details");
+							System.out.println("\t\t 5. Exit ");
 
-	                          case 5:
-//							Display
-	                          break;
-	                  }
-						
-					}					
+							System.out.print("Enter Your Choice -->");
+							int choice = sc.nextInt();
+
+							switch (choice) {
+							case 1:
+								DisplayLoanDetails.Display();
+								break;
+
+							case 2:
+								ApplyForNewLoan applyForNewLoan = new ApplyForNewLoan();
+								applyForNewLoan.applyNewLoan();
+								break;
+
+							case 3:
+								PayEmi payEmiForLoan = new PayEmi();
+								payEmiForLoan.payEmiForTheLoan();
+								break;
+
+							case 4:
+								UpdateDetails updateDetails = new UpdateDetails();
+								updateDetails.userUpdate();
+								break;
+
+							case 5:
+//								Display
+								break;
+							}
+
+						}
+					} else {
+						System.out.println("Plz Try Again...");
+						continue;
+					}
+
+				} else {
+					System.out.println("\n**********************   REGISTRATION    **********************\n");
+
+					Register register = new Register();
+					register.CustomerDetails();
+
+					break outerloop;
+
 				}
-				else {
-					System.out.println("Plz Try Again...");
-					continue;
-				}
+			}
 
-			}
-			else {
-				System.out.println("Registration Details..\n\n\n");
-				
-				Register register = new Register();
-				
-				register.CustomerDetails();
-				
-			}
 		}
 
 	}
+
 }

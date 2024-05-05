@@ -14,66 +14,59 @@ public class UpdateDetails {
         try {
             conn = DBFunction.connectDB("mysql", null, null);
             Scanner sc = new Scanner(System.in);
-            System.out.println("UPDATE User Details\n " +
-                    "1.FullName\n" + // Added missing newline character
-                    "2.Email\n" + // Added missing newline character
-                    "3.Phone\n" + // Added missing newline character
-                    "4.Address"); // Added missing newline character
-            System.out.println("Enter the choice");
+            System.out.println("\nUPDATE User Details:");
+            System.out.println("[1] Full Name");
+            System.out.println("[2] Email");
+            System.out.println("[3] Phone");
+            System.out.println("[4] Address");
+            System.out.print("Enter your choice (1-4): ");
             int choice = sc.nextInt();
             sc.nextLine(); // Consume newline character
-
+            
+            int customerID = LoginDetails.getCustomerId();
             switch (choice) {
                 case 1:
-                    System.out.println("Enter Updated Full Name");
-                    String newFullName = sc.nextLine();
-                    System.out.println("Enter your customerID");
-                    int customerID = sc.nextInt();
+                    System.out.print("\nEnter Updated Full Name --> ");
+                    String newFullName = sc.nextLine();              
                     String updateQuery1 = "UPDATE Customers SET FullName=? WHERE CustomerID=?";
                     pstmt2 = conn.prepareStatement(updateQuery1);
                     pstmt2.setString(1, newFullName);
                     pstmt2.setInt(2, customerID);
                     break;
                 case 2:
-                    System.out.println("Enter Updated Email");
+                    System.out.print("\nEnter Updated Email -->");
                     String newEmail = sc.nextLine();
-                    System.out.println("Enter your customerID");
-                    int CustomerIDEmail = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
+                    // Consume newline character
                     String updateQueryEmail = "UPDATE Customers SET Email=? WHERE CustomerID=?";
                     pstmt2 = conn.prepareStatement(updateQueryEmail);
                     pstmt2.setString(1, newEmail);
-                    pstmt2.setInt(2, CustomerIDEmail);
+                    pstmt2.setInt(2, customerID);
                     break;
 
                 case 3:
-                    System.out.println("Enter Updated mobile Number");
+                    System.out.print("Enter Updated mobile Number -->");
                     String newPhone = sc.nextLine();
-                    System.out.println("Enter your customerID");
-                    int CustomerIDPhone = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
+                    // Consume newline character
                     String updateQueryMobile = "UPDATE Customers SET Phone=? WHERE CustomerID=?";
                     pstmt2 = conn.prepareStatement(updateQueryMobile);
                     pstmt2.setString(1, newPhone);
-                    pstmt2.setInt(2, CustomerIDPhone);
+                    pstmt2.setInt(2, customerID);
                     break;
 
                 case 4:
-                    System.out.println("Enter Updated Address");
+                    System.out.print("Enter Updated Address --> ");
                     String newAddress = sc.nextLine();
-                    System.out.println("Enter your customerID");
-                    int CustomerIDAddress = sc.nextInt();
-                    sc.nextLine(); // Consume newline character
+                    // Consume newline character
                     String updateQueryAddress = "UPDATE Customers SET Address=? WHERE CustomerID=?";
                     pstmt2 = conn.prepareStatement(updateQueryAddress);
                     pstmt2.setString(1, newAddress);
-                    pstmt2.setInt(2, CustomerIDAddress);
+                    pstmt2.setInt(2, customerID);
                     break;
             }
 
             int updateStatus = pstmt2.executeUpdate();
             if (updateStatus > 0) {
-                System.out.println(updateStatus + " Record Updated Successfully");
+                System.out.println("--------------- Record Updated Successfully ---------------");
             } else {
                 System.out.println("Update failed");
             }
