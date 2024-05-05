@@ -14,12 +14,12 @@ import com.mysql.cj.xdevapi.Statement;
 public class PayEmi {
 	public void payEmiForTheLoan() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Paying the emi for the loan");
-        System.out.print("Enter the amount: ");
+        System.out.println("\nPaying the emi for the loan");
+        System.out.print("\nEnter the amount: ");
         int amount = scanner.nextInt();
                 
         insertDataForThePayment(Main.customerId, amount, Main.email);
-        System.out.println("EMI successfully paid the amount of " + amount + " for the UserId " + Main.customerId + ", UserName " + Main.username + ", userEmail " + Main.email);
+        System.out.println("EMI successfully paid the amount of " + amount + " for the CustomerId : " + LoginDetails.getCustomerId()+ ", UserName : " + LoginDetails.getUserName() + ", userEmail : " + LoginDetails.getUserEmail());
     }
 
     public static void insertDataForThePayment(int userId, int amount, String userEmail) {

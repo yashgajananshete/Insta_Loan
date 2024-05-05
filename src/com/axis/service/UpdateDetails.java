@@ -44,7 +44,7 @@ public class UpdateDetails {
                     break;
 
                 case 3:
-                    System.out.print("Enter Updated mobile Number -->");
+                    System.out.print("\nEnter Updated mobile Number -->");
                     String newPhone = sc.nextLine();
                     // Consume newline character
                     String updateQueryMobile = "UPDATE Customers SET Phone=? WHERE CustomerID=?";
@@ -54,7 +54,7 @@ public class UpdateDetails {
                     break;
 
                 case 4:
-                    System.out.print("Enter Updated Address --> ");
+                    System.out.print("\nEnter Updated Address --> ");
                     String newAddress = sc.nextLine();
                     // Consume newline character
                     String updateQueryAddress = "UPDATE Customers SET Address=? WHERE CustomerID=?";
@@ -66,9 +66,9 @@ public class UpdateDetails {
 
             int updateStatus = pstmt2.executeUpdate();
             if (updateStatus > 0) {
-                System.out.println("--------------- Record Updated Successfully ---------------");
+                System.out.println("\n--------------- Record Updated Successfully ---------------");
             } else {
-                System.out.println("Update failed");
+                System.out.println("-------------------   Update failed   -------------------");
             }
         } catch (SQLException e) {
             e.printStackTrace();

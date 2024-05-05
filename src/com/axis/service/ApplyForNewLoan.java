@@ -3,6 +3,7 @@ package com.axis.service;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +12,39 @@ import java.util.Scanner;
 import com.axis.db.DBFunction;
 
 public class ApplyForNewLoan {
+	
+	public boolean checkExistingLoan() throws SQLException {
+		
+		int customerId = LoginDetails.getCustomerId();	
+		
+		Connection connection = DBFunction.connectDB("mysql", null, null);
+		
+		 
+         // SQL query to retrieve data
+         String query = "SELECT * FROM loans WHERE CustomerID = ?";
+
+         // Create prepared statement
+         try (PreparedStatement statement = connection.prepareStatement(query)) {
+             // Set the parameter
+             statement.setInt(1, customerId);
+
+             // Execute query
+             try (ResultSet resultSet = statement.executeQuery()) {
+                 // Process ResultSet
+                 if(resultSet.next()) {
+                	 System.out.println("");
+                     return true;
+                 }
+                 else {
+                	 return false;
+                 }
+             }
+         }
+	}
+	
+	
+	
+	
 	public void applyNewLoan() throws SQLException {
 
 		String loanType;

@@ -51,22 +51,31 @@ public class Main {
 							System.out.println("\t\t 4. Update Profile details");
 							System.out.println("\t\t 5. Exit ");
 
-							System.out.print("Enter Your Choice -->");
+							System.out.print("\nEnter Your Choice -->");
 							int choice = sc.nextInt();
-
+							ApplyForNewLoan applyForNewLoan = new ApplyForNewLoan();
 							switch (choice) {
 							case 1:
 								DisplayLoanDetails.Display();
 								break;
 
 							case 2:
-								ApplyForNewLoan applyForNewLoan = new ApplyForNewLoan();
-								applyForNewLoan.applyNewLoan();
+								if (applyForNewLoan.checkExistingLoan()) {
+									System.out.println("You have already existing loan...");
+									System.out.println("Please contact bank manager to apply for another loan...\n");
+									DisplayLoanDetails.Display();
+								} else {
+									applyForNewLoan.applyNewLoan();
+								}
 								break;
 
 							case 3:
 								PayEmi payEmiForLoan = new PayEmi();
-								payEmiForLoan.payEmiForTheLoan();
+								if (applyForNewLoan.checkExistingLoan()) {
+									payEmiForLoan.payEmiForTheLoan();
+								} else {
+									System.out.println("\nYou Don't have any Existing loan.....");
+								}
 								break;
 
 							case 4:
@@ -75,8 +84,11 @@ public class Main {
 								break;
 
 							case 5:
-//								Display
-								break;
+								System.out
+										.println("\n*****************************************************************");
+								System.out.println("Thank you for using our Insta Loan application. Have a great day!");
+								System.out.println("*****************************************************************");
+								break outermostloop;
 							}
 
 						}
